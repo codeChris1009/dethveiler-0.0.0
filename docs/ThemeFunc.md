@@ -1,62 +1,93 @@
-# ThemeFunc - 主題功能模組
+# ThemeFunc - 主題切換功能
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/book-open-duotone.svg" width="20" height="20" align="center" /> 功能概述
-
-ThemeFunc 是主題切換功能模組，包含兩個核心檔案：
-
-- `ThemeProvider.tsx`：提供全域主題狀態（light / dark / system）
-- `ThemeDropdown.tsx`：提供 UI 操作介面給使用者切換主題
-
-此模組目標是：
-
-- 讓主題切換可在整個應用共用
-- 將使用者選擇持久化到 `localStorage`
-- 透過 `<html>` 的 class（`light` / `dark`）與 Tailwind `dark:` 樣式整合
+> ThemeProvider、ThemeDropdown 與 useTheme Hook
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/target-duotone.svg" width="20" height="20" align="center" /> 核心概念
+## <img src="./docIconImg/book-open-duotone.svg" width="20" height="20" align="center" /> Overview 功能概述
 
-### 1. Context 管理全域主題
+這個功能由 2 個檔案組成：
 
-`ThemeProvider` 使用 React Context 將 `theme` 與 `setTheme` 提供給所有子元件，避免逐層傳 props。
+- `src/components/themeFunc/ThemeProvider.tsx`：管理全域主題狀態、提供 Context，並同時匯出 `useTheme` Hook
+- `src/components/themeFunc/ThemeDropdown.tsx`：觸發按鈕（SunIcon / MoonIcon 動畫）與三個主題選項
+
+> **與 OpenWeatherMapFunc 的設計差異**：ThemeFunc 沒有獨立的 context 檔案，`themeProviderContext` 是定義在 `ThemeProvider.tsx` 內部的 local 變數，`useTheme` 也從同一個檔案 export。
+
+它的責任是把「目前主題偏好」（light / dark / system）集中管理，並透過 `<html>` 的 class 讓 Tailwind `dark:` 規則生效。
+
+**檔案位置**：`src/components/themeFunc/`
+
+---
+
+## <img src="./docIconImg/target-duotone.svg" width="20" height="20" align="center" /> Core Concepts 核心概念
+
+### 1. Context 與 useTheme 在同一個檔案
+
+不同於 `OpenWeatherMapFunc` 把 Context 拆到獨立 `.ts` 檔，ThemeFunc 的 context 只是 `ThemeProvider.tsx` 內的 local 變數：
+
+```typescript
+const themeProviderContext = createContext<ThemeProviderState>(initialState);
+```
+
+`useTheme` 也定義在同檔案中直接 export：
+
+```typescript
+export const useTheme = () => {
+  const context = useContext(themeProviderContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+};
+```
 
 ### 2. DOM class 切換是主題生效關鍵
 
-主題實際套用不是靠 React 樣式直接改，而是透過：
+主題效果不是靠 React 樣式直接改，而是透過 `useEffect` 操作 `<html>` 的 class：
 
-1. 移除舊 class：`light` / `dark`
-2. 新增新 class：`light`、`dark` 或 system 判斷後的 class
+1. 移除舊 class：`root.classList.remove("light", "dark")`
+2. 加上新 class：`"light"`、`"dark"`，或 `system` 判斷後的結果
 
 Tailwind 再根據 `.dark` 類別啟用 `dark:*` 規則。
 
-### 3. Dropdown 事件差異（本專案重點）
+### 3. ThemeDropdown 的 icon 行為
 
-本專案的 Dropdown 是基於 Base UI 包裝，主題項目使用 `onClick` 觸發切換。
+Trigger 按鈕使用 CSS 動畫切換兩個 icon：亮色模式顯示 `SunIcon`，暗色模式顯示 `MoonIcon`：
 
-- 教學影片常見 `onSelect`（多為 Radix 範例）
-- 本專案現況應使用 `onClick`
+```tsx
+<SunIcon className="scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+<MoonIcon className="absolute scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+```
+
+每個主題選項也各帶一個 icon：`SunIcon`（Light）、`MoonIcon`（Dark）、`LaptopIcon`（System）。
+
+### 4. Base UI render prop
+
+本專案的 `DropdownMenuTrigger` 使用 Base UI 的 `render` prop，而不是 Radix 的 `asChild`：
+
+```tsx
+<DropdownMenuTrigger render={<Button variant="secondary" size="icon">...</Button>}>
+```
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/wrench-duotone.svg" width="20" height="20" align="center" /> 完整程式碼解析
+## <img src="./docIconImg/wrench-duotone.svg" width="20" height="20" align="center" /> Code Walkthrough 程式碼解析
 
-### A. ThemeProvider.tsx
+### ThemeProvider.tsx
 
-#### 1. 型別定義
+#### 型別定義
 
 ```typescript
 type Theme = "dark" | "light" | "system";
 
-type ThemeProviderState = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+type ThemeProviderProps = {
+  children: React.ReactNode;
+  defaultTheme?: Theme; // 預設："system"
+  storageKey?: string; // 預設："vite-ui-theme"
 };
 ```
 
-用聯合型別限制合法值，避免出現無效主題字串。
-
-#### 2. 初始主題來源
+#### 初始主題來源
 
 ```typescript
 const [theme, setTheme] = useState<Theme>(
@@ -64,9 +95,9 @@ const [theme, setTheme] = useState<Theme>(
 );
 ```
 
-優先讀取 `localStorage`，沒有才使用 `defaultTheme`。
+優先讀取 localStorage，沒有才使用 `defaultTheme`（預設為 `"system"`）。
 
-#### 3. 主題同步邏輯
+#### 主題同步邏輯
 
 ```typescript
 useEffect(() => {
@@ -87,61 +118,58 @@ useEffect(() => {
 }, [theme, storageKey]);
 ```
 
-重點：`system` 會依作業系統偏好判斷，不應硬寫固定 dark。
+`system` 必須透過 `matchMedia` 判斷系統偏好，不能硬寫固定 dark。
 
-#### 4. Context 提供值
+### ThemeDropdown.tsx
 
-```typescript
-const value = {
-  theme,
-  setTheme: (theme: Theme) => {
-    localStorage.setItem(storageKey, theme);
-    setTheme(theme);
-  },
-};
+#### Trigger 按鈕（亮 / 暗動畫）
+
+```tsx
+<DropdownMenuTrigger
+  render={
+    <Button variant="secondary" size="icon">
+      <SunIcon className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
+      <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+      <span className="sr-only">Toggle theme</span>
+    </Button>
+  }
+/>
 ```
 
-`setTheme` 同步更新 state 與儲存層。
+#### 主題選項
 
-### B. ThemeDropdown.tsx
-
-#### 1. 讀取 setTheme
-
-```typescript
-const { setTheme } = useTheme();
-```
-
-#### 2. 三個主題選項
-
-```typescript
+```tsx
 <DropdownMenuItem onClick={() => setTheme("light")}>
+  <SunIcon className="me-2" />
   Light
 </DropdownMenuItem>
 <DropdownMenuItem onClick={() => setTheme("dark")}>
+  <MoonIcon className="me-2" />
   Dark
 </DropdownMenuItem>
 <DropdownMenuItem onClick={() => setTheme("system")}>
+  <LaptopIcon className="me-2" />
   system
 </DropdownMenuItem>
 ```
 
-目前專案以 `onClick` 作為切換觸發點。
-
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/note-pencil-duotone.svg" width="20" height="20" align="center" /> 使用方式
+## <img src="./docIconImg/note-pencil-duotone.svg" width="20" height="20" align="center" /> Usage 使用方式
 
-### 步驟 1：在上層包住 Provider
+### 包住 Provider
 
 ```tsx
 import { ThemeProvider } from "@/components/themeFunc/ThemeProvider";
 
 export const App = () => {
-  return <ThemeProvider>{/* 你的頁面內容 */}</ThemeProvider>;
+  return <ThemeProvider>{/* 頁面內容 */}</ThemeProvider>;
 };
 ```
 
-### 步驟 2：在工具列放入 ThemeDropdown
+`storageKey` 預設為 `"vite-ui-theme"`，`defaultTheme` 預設為 `"system"`。
+
+### 放入 ThemeDropdown
 
 ```tsx
 import { ThemeDropdown } from "@/components/themeFunc/ThemeDropdown";
@@ -149,79 +177,56 @@ import { ThemeDropdown } from "@/components/themeFunc/ThemeDropdown";
 <ThemeDropdown />;
 ```
 
-### 步驟 3：在樣式中使用 dark 變體
+### 在元件內讀取主題
 
 ```tsx
-<div className="bg-white text-black dark:bg-black dark:text-white">
-  Theme preview
-</div>
+import { useTheme } from "@/components/themeFunc/ThemeProvider";
+
+const { theme, setTheme } = useTheme();
 ```
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/magnifying-glass-duotone.svg" width="20" height="20" align="center" /> 完整流程示意圖
+## <img src="./docIconImg/magnifying-glass-duotone.svg" width="20" height="20" align="center" /> Flow Diagram 流程圖
 
-```text
-使用者點擊 ThemeDropdown 項目
-    ↓
-setTheme("light" | "dark" | "system")
-    ↓
-ThemeProvider state 更新
-    ↓
-useEffect 觸發
-    ↓
-1. localStorage 寫入主題
-2. <html> 移除舊 class
-3. <html> 加上新 class（或 system 判斷結果）
-    ↓
-Tailwind 根據 dark: 規則更新畫面
+```mermaid
+graph TD
+    A[點擊 ThemeDropdown 選項] --> B["setTheme('light' | 'dark' | 'system')"]
+    B --> C[ThemeProvider state 更新]
+    C --> D[useEffect 觸發]
+    D --> E[localStorage 寫入新主題]
+    D --> F[html 移除舊 class]
+    F --> G{theme === 'system'?}
+    G -->|是| H[matchMedia 判斷系統偏好]
+    H --> I[html 加上對應 class]
+    G -->|否| I
+    I --> J[Tailwind dark: 規則生效]
 ```
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/lightbulb-duotone.svg" width="20" height="20" align="center" /> 重點總結
+## <img src="./docIconImg/lightbulb-duotone.svg" width="20" height="20" align="center" /> Key Points 重點總結
 
-- 主題核心由 `ThemeProvider` 控制，UI 切換由 `ThemeDropdown` 提供
-- `system` 必須使用 `matchMedia` 結果，不要硬編碼成單一主題
-- 本專案的 dropdown item 以 `onClick` 觸發切換
-- 主題效果成立依賴 `<html>` 的 class 與 Tailwind `dark:` 搭配
-
----
-
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/rocket-duotone.svg" width="20" height="20" align="center" /> 進階概念
-
-### 1. 首次載入閃爍（FOUC）
-
-若頁面首次載入有亮暗閃爍，可考慮在更前期注入 theme class（例如在 HTML entry 階段）。
-
-### 2. 監聽系統主題即時變更
-
-目前是設定 `system` 時讀一次系統偏好；若需要「系統主題改變立即跟著變」，可再加 `matchMedia` change listener。
-
-### 3. Provider 與 Hook 檔案拆分
-
-若要消除 React Fast Refresh 的提示，可將 `useTheme` 移到獨立檔案，讓 Provider 檔案只輸出元件。
+- 主題由 `ThemeProvider` 集中控制，`ThemeDropdown` 只負責 UI 操作
+- `themeProviderContext` 是 local 變數，`useTheme` 與它定義在同一個檔案（不拆分）
+- `system` 必須透過 `matchMedia` 判斷，不要硬編碼
+- Trigger 按鈕使用 CSS 動畫：亮色顯示 `SunIcon`，暗色顯示 `MoonIcon`
+- 選項以 `onClick` 觸發切換，點擊後選單自動關閉
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/books-duotone.svg" width="20" height="20" align="center" /> 相關資源
+## <img src="./docIconImg/rocket-duotone.svg" width="20" height="20" align="center" /> Advanced Topics 進階概念
 
-- [React createContext](https://react.dev/reference/react/createContext)
-- [React useContext](https://react.dev/reference/react/useContext)
-- [React useEffect](https://react.dev/reference/react/useEffect)
-- [Tailwind Dark Mode](https://tailwindcss.com/docs/dark-mode)
-- [MDN localStorage](https://developer.mozilla.org/zh-TW/docs/Web/API/Window/localStorage)
+### 首次載入閃爍（FOUC）
 
----
+若頁面首次載入有亮暗閃爍，可考慮在 `index.html` 注入 inline script，在 React 初始化之前就讀取 localStorage 並設定 class，避免視覺閃爍。
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/check-duotone.svg" width="20" height="20" align="center" /> 檢查清單
+### 監聽系統主題即時變更
 
-- [ ] 確認 `ThemeProvider` 已包住需要使用主題的區塊
-- [ ] 確認 `ThemeDropdown` 點擊可切換 light / dark / system
-- [ ] 確認切換後 `<html>` class 會更新
-- [ ] 確認重新整理後主題仍可從 localStorage 還原
-- [ ] 確認 `system` 模式會依作業系統偏好套用
+目前設定 `system` 時只在 `useEffect` 觸發時讀一次系統偏好。若需要「系統主題改變後立即跟著變」，可加 `matchMedia` change listener：
 
----
-
-**最後更新**：2026年3月13日
+```typescript
+const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+mediaQuery.addEventListener("change", callback);
+return () => mediaQuery.removeEventListener("change", callback);
+```

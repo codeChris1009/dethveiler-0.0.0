@@ -2,13 +2,13 @@
 
 > _諦維兒 - 城區顯影_
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/list-duotone.svg" width="20" height="20" align="center" /> 功能文檔索引
+## <img src="./docIconImg/list-duotone.svg" width="20" height="20" align="center" /> Documentation Index 功能文檔索引
 
 > 這個資料夾包含了專案中所有功能的詳細教學文檔
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/books-duotone.svg" width="20" height="20" align="center" /> 文檔列表
+## <img src="./docIconImg/books-duotone.svg" width="20" height="20" align="center" /> Document List 文檔列表
 
 #### 0.a [Unit - 單位系統配置](./Unit.md)
 
@@ -20,24 +20,26 @@
 
 #### 2. [SearchDialog - 搜尋對話框功能](./SearchDialog.md)
 
+#### 3. [OpenWeatherMapFunc - 天氣資料狀態功能](./OpenWeatherMapFunc.md)
+
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/book-open-duotone.svg" width="20" height="20" align="center" /> 文檔結構說明
+## <img src="./docIconImg/book-open-duotone.svg" width="20" height="20" align="center" /> Structure Guide 文檔結構說明
 
 每份功能文檔包含：
 
-- <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/book-open-duotone.svg" width="16" height="16" align="center" /> 功能概述 - 這個功能是做什麼的
-- <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/target-duotone.svg" width="16" height="16" align="center" /> 核心概念 - 重要的技術概念解釋
-- <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/wrench-duotone.svg" width="16" height="16" align="center" /> 程式碼解析 - 逐行講解重點程式碼
-- <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/note-pencil-duotone.svg" width="16" height="16" align="center" /> 使用方式 - 如何在專案中使用
-- <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/magnifying-glass-duotone.svg" width="16" height="16" align="center" /> 流程圖 - 視覺化呈現資料流向
-- <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/lightbulb-duotone.svg" width="16" height="16" align="center" /> 重點總結 - 關鍵知識點整理
-- <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/rocket-duotone.svg" width="16" height="16" align="center" /> 進階概念 - 更深入的技術細節
-- <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/check-duotone.svg" width="16" height="16" align="center" /> 檢查清單 - 確認學習成果
+- <img src="./docIconImg/book-open-duotone.svg" width="16" height="16" align="center" /> 功能概述 - 這個功能是做什麼的
+- <img src="./docIconImg/target-duotone.svg" width="16" height="16" align="center" /> 核心概念 - 重要的技術概念解釋
+- <img src="./docIconImg/wrench-duotone.svg" width="16" height="16" align="center" /> 程式碼解析 - 逐行講解重點程式碼
+- <img src="./docIconImg/note-pencil-duotone.svg" width="16" height="16" align="center" /> 使用方式 - 如何在專案中使用
+- <img src="./docIconImg/magnifying-glass-duotone.svg" width="16" height="16" align="center" /> 流程圖 - 視覺化呈現資料流向
+- <img src="./docIconImg/lightbulb-duotone.svg" width="16" height="16" align="center" /> 重點總結 - 關鍵知識點整理
+- <img src="./docIconImg/rocket-duotone.svg" width="16" height="16" align="center" /> 進階概念 - 更深入的技術細節
+- <img src="./docIconImg/check-duotone.svg" width="16" height="16" align="center" /> 檢查清單 - 確認學習成果
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/link-duotone.svg" width="20" height="20" align="center" /> 外部資源
+## <img src="./docIconImg/link-duotone.svg" width="20" height="20" align="center" /> External Resources 外部資源
 
 ### React 官方文檔
 

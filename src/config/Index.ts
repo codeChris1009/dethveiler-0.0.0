@@ -6,11 +6,11 @@
 // 匯入 Mapbox GL 的經緯度類型
 import type { LngLatLike } from "mapbox-gl";
 // 匯入 OpenWeatherMap API 配置
-import { OPENWEATHERMAP_API } from "./WeatherMapAPI";
+import { OPENWEATHERMAP_API } from "@/config/WeatherMapAPI";
 
 // 重新導出 OpenWeatherMap API 配置、類型和常量
-export { OPENWEATHERMAP_API, EXCLUDE_PRESETS } from "./WeatherMapAPI";
-export type { OneCallExclude, OneCallParams } from "./WeatherMapAPI";
+export { OPENWEATHERMAP_API, EXCLUDE_PRESETS } from "@/config/WeatherMapAPI";
+export type { OneCallExclude, OneCallParams } from "@/config/WeatherMapAPI";
 
 /**
  * Mapbox 地圖配置
@@ -43,8 +43,8 @@ export const APP = {
 } as const;
 
 // 重新匯出 UNITS 和相關類型供其他模組使用
-export { UNITS } from "./Unit";
-export type { UnitSystem, UnitConfig } from "./Unit";
+export { UNITS } from "@/config/Unit";
+export type { UnitSystem, UnitConfig } from "@/config/Unit";
 
 // 從 Unit.ts 匯出所有格式化工具函數
-export * from "./Unit";
+export * from "@/config/Unit";

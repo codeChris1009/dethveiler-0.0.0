@@ -14,16 +14,16 @@
 import axios from "axios";
 
 // 從獨立檔案導入 apiClient 以避免循環依賴
-export { apiClient } from "./client";
+export { apiClient } from "@/api/client";
 
 /**
  * 統一的 API Key 取得函數
  * 適用於所有 API 提供商
- * 
+ *
  * @param keyName - 環境變數名稱（如 'VITE_OPENWEATHER_API_KEY'）
  * @returns API Key 字串
  * @throws {Error} 當 API Key 不存在時拋出錯誤
- * 
+ *
  * @example
  * ```typescript
  * const owmKey = getApiKey('VITE_OPENWEATHER_API_KEY');
@@ -32,11 +32,11 @@ export { apiClient } from "./client";
  */
 export const getApiKey = (keyName: string): string => {
   const apiKey = import.meta.env[keyName];
-  
+
   if (!apiKey) {
     throw new Error(`Missing API Key: ${keyName}`);
   }
-  
+
   return apiKey;
 };
 
@@ -99,12 +99,13 @@ export {
   demoOpenWeatherMap,
   // 函數
   getGeocoding,
+  getReverseGeocoding,
   getOneCallWeather,
   getCurrentWeather,
   getHourlyForecast,
   getDailyForecast,
   getFullWeather,
-} from "./OpenWeatherMap";
+} from "@/api/OpenWeatherMap";
 
 // 從配置模組重新導出類型
 export type { OneCallParams } from "@/config";
