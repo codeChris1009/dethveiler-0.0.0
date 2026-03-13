@@ -43,9 +43,7 @@ export const ThemeProvider = ({
         .matches
         ? "dark"
         : "light";
-      // for test dark only
-      // root.classList.add(systemTheme);
-      root.classList.add("dark");
+      root.classList.add(systemTheme);
 
       return;
     }

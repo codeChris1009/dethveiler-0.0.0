@@ -2,7 +2,7 @@
 
 > _諦維兒 - 城區顯影_
 
-## 功能文檔索引
+## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/list-duotone.svg" width="20" height="20" align="center" /> 功能文檔索引
 
 > 這個資料夾包含了專案中所有功能的詳細教學文檔
 
@@ -10,7 +10,15 @@
 
 ## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/books-duotone.svg" width="20" height="20" align="center" /> 文檔列表
 
-#### 1. [ThemeProvider - 主題切換功能](./ThemeProvider.md)
+#### 0.a [Unit - 單位系統配置](./Unit.md)
+
+#### 0.b [Config - 應用程式配置管理](./Config.md)
+
+#### 0.c [API - API 服務層](./API.md)
+
+#### 1. [ThemeFunc - 主題切換功能](./ThemeFunc.md)
+
+#### 2. [SearchDialog - 搜尋對話框功能](./SearchDialog.md)
 
 ---
 
