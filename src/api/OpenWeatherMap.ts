@@ -10,8 +10,8 @@
  */
 
 // Customer modules
-import { OPENWEATHERMAP_API, EXCLUDE_PRESETS } from "@/config";
-import type { OneCallParams } from "@/config";
+import { OPENWEATHERMAP_API, EXCLUDE_PRESETS } from "@/config/WeatherMapAPI";
+import type { OneCallParams } from "@/config/WeatherMapAPI";
 import { apiClient } from "./client";
 import { getApiKey, handleApiError } from "./index";
 
@@ -279,8 +279,49 @@ export const getGeocoding = async (query: string): Promise<Geocoding[]> => {
         },
       },
     );
-    return response.data;
+    return response.data as Geocoding[];
   } catch (error) {
     return handleApiError(error, "getGeocoding");
+  }
+};
+
+/**
+ * 反向地理編碼 API - 根據經緯度取得位置名稱
+ *
+ * @param lat - 緯度（-90 ~ 90）
+ * @param lon - 經度（-180 ~ 180）
+ * @param limit - 回傳結果數量上限（可選，預設使用 SEARCH_RESULT_LIMIT）
+ * @returns Promise<Geocoding[]> - 地理位置資料陣列
+ *
+ * @example
+ * ```typescript
+ * const locations = await getReverseGeocoding(25.0338, 121.5654);
+ * if (locations.length > 0) {
+ *   console.log(`${locations[0].name}, ${locations[0].country}`);
+ * }
+ * ```
+ *
+ * @throws {Error} 當 API 呼叫失敗時拋出錯誤
+ */
+export const getReverseGeocoding = async (
+  lat: number,
+  lon: number,
+  limit: number = OPENWEATHERMAP_API.DEFAULTS.SEARCH_RESULT_LIMIT,
+): Promise<Geocoding[]> => {
+  try {
+    const response = await owmAxios.get<Geocoding[]>(
+      OPENWEATHERMAP_API.ENDPOINTS.REVERSE_GEOCODING,
+      {
+        params: {
+          lat,
+          lon,
+          limit,
+          appid: getApiKey(OWM_API_KEY),
+        },
+      },
+    );
+    return response.data as Geocoding[];
+  } catch (error) {
+    return handleApiError(error, "getReverseGeocoding");
   }
 };

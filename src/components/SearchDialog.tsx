@@ -1,9 +1,10 @@
 // Customer modules
-import { APP, OPENWEATHERMAP_API } from "@/config";
-import { demoOpenWeatherMap, getGeocoding } from "@/api/index";
+import { APP } from "@/config";
+import { getGeocoding } from "@/api/index";
 
 // Hooks
 import { useEffect, useCallback, useState } from "react";
+import { useWeather } from "@/hooks/useWeather";
 
 // Components
 import {
@@ -43,6 +44,8 @@ import { MapPinAreaIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import type { Geocoding } from "@/types/Index";
 
 export const SearchDialog = () => {
+  // Hooks
+  const { setWeather } = useWeather();
   // State
   const [search, setSearch] = useState<string>("");
   const [results, setResults] = useState<Geocoding[]>([]);
@@ -51,8 +54,7 @@ export const SearchDialog = () => {
   // Request
   const geoCoding = useCallback(async (search: string) => {
     const normalizedSearch = search.trim();
-    if (!normalizedSearch) return;
-    if (!/^[a-z]/i.test(normalizedSearch)) {
+    if (!normalizedSearch) {
       setResults([]);
       return;
     }
@@ -87,27 +89,44 @@ export const SearchDialog = () => {
 
     (async () => {
       const geoRes = await geoCoding(search);
-      console.log("Geocoding response:", geoRes);
 
-      if (geoRes && geoRes.length > 0) setResults(geoRes);
+      if (geoRes && geoRes.length > 0) {
+        setResults(geoRes);
+      }
     })();
   }, [search, geoCoding]);
 
-  // Handle  open/close dialog and clear search text when closing
+  // Handlers
+
+  // open / close dialog and clear search text when closing
   const handleDialogToggle = (isOpen: boolean) => {
-    console.table({ isOpen: isOpen });
     setIsOpenSearchDialog(isOpen);
     if (!isOpen) {
-      setSearch("");
-      setResults([]);
+      clearSearchState();
     }
   };
 
+  // Handle search input change
   const handleSearchInput = (searchTxt: string) => {
     setSearch(searchTxt);
     if (!searchTxt.trim()) {
       setResults([]);
     }
+  };
+
+  // Handle location selection from search results
+  const handleLocationSelect = (lat: number, lon: number) => {
+    setWeather({ lat, lon });
+    localStorage.setItem(APP.STORE_KEY.LATITUDE, String(lat));
+    localStorage.setItem(APP.STORE_KEY.LONGITUDE, String(lon));
+    clearSearchState();
+    setIsOpenSearchDialog(false);
+  };
+
+  // Private Functions
+  const clearSearchState = () => {
+    setSearch("");
+    setResults([]);
   };
 
   return (
@@ -126,9 +145,10 @@ export const SearchDialog = () => {
             <div
               className="
               flex justify-between w-[250px]
-              max-lg:hidden uppercase"
+              max-lg:hidden uppercase
+              text-muted-foreground dark:text-muted-foreground/70 placeholder:opacity-100"
             >
-              search weather...
+              <span className="text-inherit opacity-70">search weather...</span>
               <kbd className="ml-2">
                 <KbdGroup>
                   <Kbd>⌘</Kbd>
@@ -171,7 +191,18 @@ export const SearchDialog = () => {
             <Item
               key={`${name}-${lat}-${lon}`}
               size="sm"
-              className="relative p-2"
+              className="
+              relative p-2 cursor-pointer transition-all duration-150
+              hover:bg-muted/80 active:scale-[0.99] active:bg-muted"
+              role="button"
+              tabIndex={0}
+              onClick={() => handleLocationSelect(lat, lon)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleLocationSelect(lat, lon);
+                }
+              }}
             >
               <ItemContent>
                 <ItemTitle className="capitalize">{name}</ItemTitle>
@@ -188,7 +219,10 @@ export const SearchDialog = () => {
                       variant="ghost"
                       size="icon"
                       className="after:absolute after:inset-0"
-                      onClick={() => {}}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleLocationSelect(lat, lon);
+                      }}
                     >
                       <MapPinAreaIcon />
                     </Button>

@@ -2,7 +2,7 @@
 
 本文件為 Dethveiler 專案 API 服務層的總覽與快速導航。
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/folders-duotone.svg" width="20" height="20" align="center" /> 文件結構
+## <img src="./docIconImg/folders-duotone.svg" width="20" height="20" align="center" /> File Structure 文件結構
 
 ```
 docs/
@@ -13,7 +13,7 @@ docs/
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/cube-duotone.svg" width="20" height="20" align="center" /> 架構概覽
+## <img src="./docIconImg/cube-duotone.svg" width="20" height="20" align="center" /> Architecture Overview 架構概覽
 
 ### 程式碼結構
 
@@ -123,7 +123,7 @@ import { getGeocoding } from "@/api/OpenWeatherMap";
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/cloud-sun-duotone.svg" width="20" height="20" align="center" /> API 提供商
+## <img src="./docIconImg/cloud-sun-duotone.svg" width="20" height="20" align="center" /> API Providers API 提供商
 
 ### OpenWeatherMap API
 
@@ -134,20 +134,22 @@ import { getGeocoding } from "@/api/OpenWeatherMap";
 **提供的 API**：
 
 - **Geocoding API** - 根據地點名稱搜尋經緯度座標
+- **Reverse Geocoding API** - 根據經緯度反查地點名稱
 - **One Call API 3.0** - 完整天氣資料（當前、分鐘級、小時級、每日預報、警報）
 
 **主要函數**：
 
-| 函數                | 用途                   | 回傳資料                     |
-| ------------------- | ---------------------- | ---------------------------- |
-| `getGeocoding`      | 地理編碼搜尋           | 地點名稱 → 經緯度座標        |
-| `getOneCallWeather` | 完整天氣資料（可客製） | 當前 + 預報 + 警報（可排除） |
-| `getCurrentWeather` | 僅當前天氣             | 即時溫度、濕度、風速等       |
-| `getHourlyForecast` | 48 小時預報            | 未來 2 天的小時級預報        |
-| `getDailyForecast`  | 8 天預報               | 未來一週的每日預報           |
-| `getFullWeather`    | 完整資料（不排除）     | 所有區塊（當前 + 所有預報）  |
+| 函數                  | 用途                   | 回傳資料                     |
+| --------------------- | ---------------------- | ---------------------------- |
+| `getGeocoding`        | 地理編碼搜尋           | 地點名稱 → 經緯度座標        |
+| `getReverseGeocoding` | 反向地理編碼           | 經緯度 → 地點名稱            |
+| `getOneCallWeather`   | 完整天氣資料（可客製） | 當前 + 預報 + 警報（可排除） |
+| `getCurrentWeather`   | 僅當前天氣             | 即時溫度、濕度、風速等       |
+| `getHourlyForecast`   | 48 小時預報            | 未來 2 天的小時級預報        |
+| `getDailyForecast`    | 8 天預報               | 未來一週的每日預報           |
+| `getFullWeather`      | 完整資料（不排除）     | 所有區塊（當前 + 所有預報）  |
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/gear-duotone.svg" width="20" height="20" align="center" /> 環境設定
+## <img src="./docIconImg/gear-duotone.svg" width="20" height="20" align="center" /> Environment Setup 環境設定
 
 ### API Key 設定
 
@@ -174,7 +176,7 @@ VITE_OPENWEATHER_API_KEY=your_openweather_key_here
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/key-duotone.svg" width="20" height="20" align="center" /> API Key 管理
+## <img src="./docIconImg/key-duotone.svg" width="20" height="20" align="center" /> API Key Management API Key 管理
 
 ### 統一的 API Key 取得方法（getApiKey）
 
@@ -237,7 +239,7 @@ const mapboxKey = getApiKey("VITE_MAPBOX_API_KEY");
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/warning-duotone.svg" width="20" height="20" align="center" /> 常見問題與注意事項
+## <img src="./docIconImg/warning-duotone.svg" width="20" height="20" align="center" /> FAQ and Notes 常見問題與注意事項
 
 ### ⚠️ 新手常見錯誤
 
@@ -351,7 +353,7 @@ git commit -m "Remove .env from git history"
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/book-open-text-duotone.svg" width="20" height="20" align="center" /> 通用最佳實踐
+## <img src="./docIconImg/book-open-text-duotone.svg" width="20" height="20" align="center" /> General Best Practices 通用最佳實踐
 
 以下是跨所有 API 提供商都適用的開發實踐，透過實作這些模式可以提升應用效能、使用者體驗和程式碼品質。
 
@@ -912,7 +914,7 @@ class DataFormatter {
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/link-duotone.svg" width="20" height="20" align="center" /> 相關文件
+## <img src="./docIconImg/link-duotone.svg" width="20" height="20" align="center" /> Related Documents 相關文件
 
 ### API 提供商文件
 
@@ -929,7 +931,7 @@ class DataFormatter {
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/lightbulb-duotone.svg" width="20" height="20" align="center" /> 開發指南
+## <img src="./docIconImg/lightbulb-duotone.svg" width="20" height="20" align="center" /> Development Guide 開發指南
 
 ### 新增 API 提供商
 
@@ -952,7 +954,7 @@ class DataFormatter {
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/warning-duotone.svg" width="20" height="20" align="center" /> 常見問題
+## <img src="./docIconImg/warning-duotone.svg" width="20" height="20" align="center" /> FAQ 常見問題
 
 ### API Key 無效或失效
 
@@ -986,7 +988,7 @@ class DataFormatter {
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/check-duotone.svg" width="20" height="20" align="center" /> 檢查清單
+## <img src="./docIconImg/check-duotone.svg" width="20" height="20" align="center" /> Checklist 檢查清單
 
 在開發使用 API 的功能前，請確認：
 

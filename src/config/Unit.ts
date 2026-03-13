@@ -7,7 +7,12 @@
 /**
  * 單位系統類型定義
  */
-export type UnitSystem = "metric" | "imperial";
+export const UNIT_SYSTEM = {
+  METRIC: "metric",
+  IMPERIAL: "imperial",
+} as const;
+
+export type UnitSystem = (typeof UNIT_SYSTEM)[keyof typeof UNIT_SYSTEM];
 
 /**
  * 單位配置物件類型

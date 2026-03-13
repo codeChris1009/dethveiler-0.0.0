@@ -6,7 +6,7 @@
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/file-text-duotone.svg" width="20" height="20" align="center" /> 相關檔案
+## <img src="../docIconImg/file-text-duotone.svg" width="20" height="20" align="center" /> Related Files 相關檔案
 
 - **API 實作**：[src/api/OpenWeatherMap.ts](../../src/api/OpenWeatherMap.ts)
 - **配置檔**：[src/config/WeatherMapAPI.ts](../../src/config/WeatherMapAPI.ts)
@@ -14,11 +14,12 @@
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/list-bullets-duotone.svg" width="20" height="20" align="center" /> 目錄
+## <img src="../docIconImg/list-bullets-duotone.svg" width="20" height="20" align="center" /> Table of Contents 目錄
 
 - [環境設定](#環境設定)
 - [API 函數](#api-函數)
   - [getGeocoding](#getgeocoding)
+  - [getReverseGeocoding](#getreversegeocoding)
   - [getOneCallWeather](#getonecallweather)
   - [getCurrentWeather](#getcurrentweather)
   - [getHourlyForecast](#gethourlyforecast)
@@ -29,7 +30,7 @@
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/gear-duotone.svg" width="20" height="20" align="center" /> 環境設定
+## <img src="../docIconImg/gear-duotone.svg" width="20" height="20" align="center" /> Environment Setup 環境設定
 
 ### 1. 取得 API Key
 
@@ -58,6 +59,7 @@ VITE_OPENWEATHER_API_KEY=你的_API_Key
 // 從統一入口匯入
 import {
   getGeocoding,
+  getReverseGeocoding,
   getOneCallWeather,
   getCurrentWeather,
   getHourlyForecast,
@@ -68,7 +70,7 @@ import {
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/code-duotone.svg" width="20" height="20" align="center" /> API 函數
+## <img src="../docIconImg/code-duotone.svg" width="20" height="20" align="center" /> API Functions API 函數
 
 ### getGeocoding
 
@@ -130,6 +132,39 @@ if (locations.length > 0) {
 - 搜尋不區分大小寫
 - 可使用城市名稱、州/省名稱、國家代碼等進行搜尋
 - 範例：`"Taipei"`, `"Tokyo,JP"`, `"New York,NY,US"`
+
+---
+
+### getReverseGeocoding
+
+根據經緯度反查地點名稱。
+
+#### 函數簽章
+
+```typescript
+getReverseGeocoding(lat: number, lon: number, limit?: number): Promise<Geocoding[]>
+```
+
+#### 使用範例
+
+```typescript
+const locations = await getReverseGeocoding(40.7127281, -74.0060152, 1);
+const location = locations[0] ?? null;
+
+if (location) {
+  console.log(`${location.name}, ${location.country}`);
+}
+```
+
+#### 實際用途
+
+這支 API 目前主要由 `OpenWeatherMapProvider` 使用。
+
+流程是：
+
+1. 先用 `onecall` 取得天氣資料
+2. 再用 `reverse geocoding` 把經緯度轉成人類可讀的位置名稱
+3. 組成完整 `weather` state 後提供給 UI
 
 ---
 
@@ -605,7 +640,7 @@ if (weather.alerts && weather.alerts.length > 0) {
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/warning-duotone.svg" width="20" height="20" align="center" /> 錯誤處理
+## <img src="../docIconImg/warning-duotone.svg" width="20" height="20" align="center" /> Error Handling 錯誤處理
 
 所有 API 函數都包含錯誤處理機制，建議在呼叫時使用 `try-catch`：
 
@@ -665,7 +700,7 @@ try {
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/lightbulb-duotone.svg" width="20" height="20" align="center" /> 最佳實踐
+## <img src="../docIconImg/lightbulb-duotone.svg" width="20" height="20" align="center" /> Best Practices 最佳實踐
 
 > **💡 通用最佳實踐**：關於快取、防抖、載入狀態、統一單位顯示等通用技術，請參考 [API.md - 通用最佳實踐](../API.md#通用最佳實踐)。
 
@@ -681,7 +716,7 @@ try {
 
 ---
 
-## <img src="https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.0.0/assets/duotone/link-duotone.svg" width="20" height="20" align="center" /> 相關文件
+## <img src="../docIconImg/link-duotone.svg" width="20" height="20" align="center" /> Related Documents 相關文件
 
 - [API.md](../API.md) - API 服務層總覽
 - [Config.md](../Config.md) - 設定檔說明

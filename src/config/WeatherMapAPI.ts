@@ -9,7 +9,8 @@
  * @see https://openweathermap.org/api - OpenWeather API 官方文件
  */
 
-import type { UnitSystem } from "./Unit";
+import { UNIT_SYSTEM } from "@/config/Unit";
+import type { UnitSystem } from "@/config/Unit";
 
 /**
  * One Call API 可排除的資料區塊類型
@@ -95,6 +96,8 @@ export const OPENWEATHERMAP_API = {
   ENDPOINTS: {
     /** Geocoding API（地理編碼，用於地點搜尋） */
     GEOCODING: "http://api.openweathermap.org/geo/1.0/direct",
+    /** Reverse Geocoding API（反向地理編碼，用於經緯度反查地點） */
+    REVERSE_GEOCODING: "http://api.openweathermap.org/geo/1.0/reverse",
     /** One Call API 3.0（完整天氣資料） */
     ONECALL: "https://api.openweathermap.org/data/3.0/onecall",
   },
@@ -107,7 +110,7 @@ export const OPENWEATHERMAP_API = {
     /** 預設經度（台灣台北） */
     LONGITUDE: 121.5654,
     /** 預設單位系統：公制（metric）或英制（imperial） */
-    UNIT: "metric" as UnitSystem,
+    UNIT: UNIT_SYSTEM.METRIC as UnitSystem,
     /** 預設語言：英文 */
     LANG: "en",
     /** 搜尋結果最大數量：5 筆 */
