@@ -11,7 +11,7 @@ import {
 } from "@/components/featureOpenWeatherMap/OpenWeatherMapContext";
 
 // Types
-import type { Geocoding, OneCallWeatherRes } from "@/types/Index";
+import type { Geocoding, OneCallWeatherRes } from "@/types";
 
 // Provider
 export const OpenWeatherMapProvider = ({

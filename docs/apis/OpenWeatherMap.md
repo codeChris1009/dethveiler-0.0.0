@@ -10,7 +10,7 @@
 
 - **API 實作**：[src/api/OpenWeatherMap.ts](../../src/api/OpenWeatherMap.ts)
 - **配置檔**：[src/config/WeatherMapAPI.ts](../../src/config/WeatherMapAPI.ts)
-- **類型定義**：[src/types/Index.tsx](../../src/types/Index.tsx)
+- **類型定義**：[src/types/openweathermap.ts](../../src/types/openweathermap.ts)
 
 ---
 
