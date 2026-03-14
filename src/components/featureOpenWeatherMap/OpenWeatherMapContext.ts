@@ -13,7 +13,7 @@ import type {
   Alert,
   Geocoding,
   WeatherTimezone,
-} from "@/types/Index";
+} from "@/types";
 
 export type Weather = {
   current: CurrentWeather;

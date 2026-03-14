@@ -41,7 +41,7 @@ import { MapPinAreaIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 // Types
 
-import type { Geocoding } from "@/types/Index";
+import type { Geocoding } from "@/types";
 
 export const SearchDialog = () => {
   // Hooks

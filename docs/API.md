@@ -949,7 +949,7 @@ class DataFormatter {
 
 - **錯誤處理**：使用 try-catch 包裝所有 API 呼叫
 - **類型定義**：在 `src/types/Index.tsx` 中定義相關類型
-- **配置管理**：在 `src/config/Index.ts` 中集中管理 API 設定
+- **配置管理**：在 `src/config/index.ts` 中集中管理 API 設定
 - **文件完整性**：提供詳細的 JSDoc 註解和 Markdown 文件
 
 ---

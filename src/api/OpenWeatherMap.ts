@@ -16,11 +16,7 @@ import { apiClient } from "./client";
 import { getApiKey, handleApiError } from "./index";
 
 // Types
-import type {
-  Geocoding,
-  OneCallWeatherRes,
-  CurrentWeather,
-} from "@/types/Index";
+import type { Geocoding, OneCallWeatherRes, CurrentWeather } from "@/types";
 
 /**
  * OpenWeatherMap API Key 環境變數名稱
