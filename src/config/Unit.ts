@@ -27,6 +27,9 @@ export type UnitConfig = {
  * 使用 as const 確保所有單位字串為唯讀常數
  */
 export const UNITS = {
+  // Degree symbol for temperature
+  DEGREE: "°",
+
   /**
    * 溫度單位
    * - metric: 攝氏度 (Celsius)

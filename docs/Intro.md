@@ -33,6 +33,8 @@
 
 #### 4. [PageHeader - 天氣地點標題元件](./PageHeader.md)
 
+#### 5. [CurrentWeatherCard - 現時天氣卡片元件](./CurrentWeatherCard.md)
+
 ---
 
 ## <img src="./docIconImg/book-open-duotone.svg" width="20" height="20" align="center" /> Structure Guide 文檔結構說明
