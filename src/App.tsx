@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/themeFunc/ThemeProvider";
 import { OpenWeatherMapProvider } from "@/components/featureOpenWeatherMap/OpenWeatherMapProvider";
 import { TopAppBar } from "@/components/TopAppBar";
 import { PageHeader } from "@/components/PageHeader";
+import { CurrentWeatherCard } from "@/components/CurrentWeatherCard";
 
 export const App = () => {
   return (
@@ -16,6 +17,10 @@ export const App = () => {
             <div className="container">
               {/* Page Header */}
               <PageHeader />
+              {/* Current Weather Card */}
+              <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <CurrentWeatherCard />
+              </div>
             </div>
           </main>
         </OpenWeatherMapProvider>
