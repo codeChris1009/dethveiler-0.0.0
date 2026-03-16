@@ -13,25 +13,18 @@ import {
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Config
-import { getUnit } from "@/config/index";
-
 // Types
 import type { ChartConfig } from "@/components/ui/chart";
 
 // Chart config
 const chartConfig: ChartConfig = {
-  temperature: {
-    label: "Temperature",
+  pressure: {
+    label: "Pressure",
     color: "oklch(0.855 0.138 181.071)", // index.css --chart-1
-  },
-  feels: {
-    label: "Feels Like",
-    color: "oklch(0.552 0.016 285.938)", // index.css --muted-foreground
   },
 } satisfies ChartConfig;
 
-export const OverviewChart = () => {
+export const PressureChart = () => {
   // Hooks
   const { weather } = useWeather();
 
@@ -42,8 +35,7 @@ export const OverviewChart = () => {
         hour: "numeric",
         hour12: true,
       }),
-      temperature: item.temp,
-      feels: item.feels_like,
+      pressure: item.pressure,
     }));
   }, [weather]);
 
@@ -61,18 +53,17 @@ export const OverviewChart = () => {
           tickMargin={16}
         />
         <YAxis
-          dataKey="temperature"
+          dataKey="pressure"
           tickLine={false}
           axisLine={false}
           tickCount={5}
           tickMargin={16}
-          tickFormatter={(value) => `${value}${getUnit("DEGREE", "metric")}`}
         />
 
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 
         <defs>
-          <linearGradient id="fillTemperature" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="fillPressure" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--chart-1)" stopOpacity={0.9} />
             <stop offset="50%" stopColor="var(--chart-2)" stopOpacity={0.5} />
             <stop offset="100%" stopColor="var(--chart-3)" stopOpacity={0.1} />
@@ -80,21 +71,12 @@ export const OverviewChart = () => {
         </defs>
 
         <Area
-          dataKey="temperature"
+          dataKey="pressure"
           type="natural"
-          fill="url(#fillTemperature)" // index.css 漸層
+          fill="url(#fillPressure)" // index.css 漸層
           fillOpacity={1}
           stroke="var(--chart-1)"
           strokeOpacity={1}
-        />
-
-        <Area
-          dataKey="feels"
-          type="natural"
-          fillOpacity={0}
-          stroke="oklch(0.60276 0.17218 303.962)" // 指定的紫色
-          strokeWidth={2}
-          activeDot={false}
         />
 
         <ChartLegend content={<ChartLegendContent />} />

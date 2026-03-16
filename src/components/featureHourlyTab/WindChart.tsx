@@ -13,25 +13,22 @@ import {
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Config
-import { getUnit } from "@/config/index";
-
 // Types
 import type { ChartConfig } from "@/components/ui/chart";
 
 // Chart config
 const chartConfig: ChartConfig = {
-  temperature: {
-    label: "Temperature",
+  wind_speed: {
+    label: "Wind Speed",
     color: "oklch(0.855 0.138 181.071)", // index.css --chart-1
   },
-  feels: {
-    label: "Feels Like",
+  wind_gust: {
+    label: "Wind Gust",
     color: "oklch(0.552 0.016 285.938)", // index.css --muted-foreground
   },
 } satisfies ChartConfig;
 
-export const OverviewChart = () => {
+export const WindChart = () => {
   // Hooks
   const { weather } = useWeather();
 
@@ -42,8 +39,9 @@ export const OverviewChart = () => {
         hour: "numeric",
         hour12: true,
       }),
-      temperature: item.temp,
-      feels: item.feels_like,
+      wind_speed: item.wind_speed,
+      wind_gust: item.wind_gust,
+      wind_deg: item.wind_deg,
     }));
   }, [weather]);
 
@@ -61,18 +59,17 @@ export const OverviewChart = () => {
           tickMargin={16}
         />
         <YAxis
-          dataKey="temperature"
+          dataKey="wind_speed"
           tickLine={false}
           axisLine={false}
           tickCount={5}
           tickMargin={16}
-          tickFormatter={(value) => `${value}${getUnit("DEGREE", "metric")}`}
         />
 
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 
         <defs>
-          <linearGradient id="fillTemperature" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="fillWindSpeed" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--chart-1)" stopOpacity={0.9} />
             <stop offset="50%" stopColor="var(--chart-2)" stopOpacity={0.5} />
             <stop offset="100%" stopColor="var(--chart-3)" stopOpacity={0.1} />
@@ -80,16 +77,16 @@ export const OverviewChart = () => {
         </defs>
 
         <Area
-          dataKey="temperature"
+          dataKey="wind_speed"
           type="natural"
-          fill="url(#fillTemperature)" // index.css 漸層
+          fill="url(#fillWindSpeed)" // index.css 漸層
           fillOpacity={1}
           stroke="var(--chart-1)"
           strokeOpacity={1}
         />
 
         <Area
-          dataKey="feels"
+          dataKey="wind_gust"
           type="natural"
           fillOpacity={0}
           stroke="oklch(0.60276 0.17218 303.962)" // 指定的紫色

@@ -3,6 +3,13 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { OverviewChart } from "@/components/featureHourlyTab/OverviewChart";
 import { PrecipitationChart } from "@/components/featureHourlyTab/PrecipitationChart";
+import { WindChart } from "@/components/featureHourlyTab/WindChart";
+import { HumidityChart } from "@/components/featureHourlyTab/HumidityChart";
+import { CloudCoverChart } from "@/components/featureHourlyTab/CloudCoverChart";
+import { PressureChart } from "@/components/featureHourlyTab/PressureChart";
+import { UVChart } from "@/components/featureHourlyTab/UVChart";
+import { VisibilityChart } from "@/components/featureHourlyTab/VisibilityChart";
+import { FeelsLikeChart } from "@/components/featureHourlyTab/FeelsLikeChart";
 
 // Config
 import { TABS_LIST } from "@/config/index";
@@ -62,6 +69,88 @@ export const HourlyWeatherTabs = () => {
           </CardHeader>
           <CardContent>
             <PrecipitationChart />
+          </CardContent>
+        </Card>
+      </TabsContent>
+
+      {/* Wind tab */}
+      <TabsContent value="wind">
+        <Card>
+          <CardHeader>
+            <CardTitle>Wind</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <WindChart />
+          </CardContent>
+        </Card>
+      </TabsContent>
+
+      {/* Humidity tab */}
+      <TabsContent value="humidity">
+        <Card>
+          <CardHeader>
+            <CardTitle>Humidity</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <HumidityChart />
+          </CardContent>
+        </Card>
+      </TabsContent>
+
+      {/* Cloud cover tab */}
+      <TabsContent value="cloudCover">
+        <Card>
+          <CardHeader>
+            <CardTitle>Cloud Cover</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CloudCoverChart />
+          </CardContent>
+        </Card>
+      </TabsContent>
+
+      {/* Pressure tab */}
+      <TabsContent value="pressure">
+        <Card>
+          <CardHeader>
+            <CardTitle>Pressure</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <PressureChart />
+          </CardContent>
+        </Card>
+      </TabsContent>
+
+      {/* UV tab */}
+      <TabsContent value="uv">
+        <Card>
+          <CardHeader>
+            <CardTitle>UV Index</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <UVChart />
+          </CardContent>
+        </Card>
+      </TabsContent>
+      {/* Visibility tab */}
+      <TabsContent value="visibility">
+        <Card>
+          <CardHeader>
+            <CardTitle>Visibility</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <VisibilityChart />
+          </CardContent>
+        </Card>
+      </TabsContent>
+      {/* Feels like tab */}
+      <TabsContent value="feelsLike">
+        <Card>
+          <CardHeader>
+            <CardTitle>Feels Like</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <FeelsLikeChart />
           </CardContent>
         </Card>
       </TabsContent>
