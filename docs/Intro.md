@@ -41,6 +41,8 @@
 
 #### 8. [MapMarker - 地圖圖標功能](./Marker.md)
 
+#### 9. [HourlyTab - 氣候圖表每小時](./HourlyTab.md)
+
 ---
 
 ## <img src="./docIconImg/book-open-duotone.svg" width="20" height="20" align="center" /> Structure Guide 文檔結構說明
