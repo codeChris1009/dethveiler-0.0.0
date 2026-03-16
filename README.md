@@ -45,9 +45,9 @@
 
 ---
 
-<img src="./sysImg/localhost_5173_.png" alt="SYS FULL SCREEN" width="400" />
+<img src="./sysImg/localhost_5173_.png" alt="SYS FULL SCREEN" width="800" />
 
-<img src="./sysImg/截圖 2026-03-16 17.19.21.png" alt="SEARCH DIALOG" width="400" />
+<img src="./sysImg/截圖 2026-03-16 17.19.21.png" alt="SEARCH DIALOG" width="800" />
 
 ## REFERENCE
 
