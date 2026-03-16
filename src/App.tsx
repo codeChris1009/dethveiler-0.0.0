@@ -28,6 +28,11 @@ export const App = () => {
               <HourlyWeatherTabs />
             </div>
           </main>
+          <footer className="pb-5">
+            <p className="text-center text-muted-foreground">
+              &copy; {new Date().getFullYear()} Dethveiler. All rights reserved.
+            </p>
+          </footer>
         </OpenWeatherMapProvider>
       </ThemeProvider>
     </div>
