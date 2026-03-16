@@ -254,7 +254,12 @@ export function getUnit(
   system: UnitSystem,
 ): string {
   const unit = UNITS[unitType];
-  if (typeof unit === "object" && unit !== null && "metric" in unit && "imperial" in unit) {
+  if (
+    typeof unit === "object" &&
+    unit !== null &&
+    "metric" in unit &&
+    "imperial" in unit
+  ) {
     return unit[system];
   }
   // 若該單位型態不是物件（如 DEGREE），直接回傳

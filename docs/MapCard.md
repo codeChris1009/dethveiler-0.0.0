@@ -79,3 +79,10 @@ graph TD
 
 - 可擴充更多地圖互動功能，仍建議統一封裝於服務層
 - 建議所有地圖副作用都集中於 useEffect，避免記憶體洩漏
+
+---
+
+## <img src="./docIconImg/link-duotone.svg" width="20" height="20" align="center" /> Marker 標記元件教學
+
+- Map 元件會自動串接 Marker，顯示天氣資訊於地圖中心。
+- Marker 元件說明請見 [Marker.md](./Marker.md)

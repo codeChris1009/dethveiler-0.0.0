@@ -12,14 +12,14 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "./ui/card";
+} from "../ui/card";
 
 // Assets
 import { WindIcon } from "@phosphor-icons/react";
 
 // Types
 import type { UnitSystem } from "@/config/index";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 
 export const CurrentWeatherCard = () => {
   const { weather } = useWeather();

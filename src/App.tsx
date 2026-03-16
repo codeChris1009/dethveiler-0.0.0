@@ -3,8 +3,9 @@ import { ThemeProvider } from "@/components/themeFunc/ThemeProvider";
 import { OpenWeatherMapProvider } from "@/components/featureOpenWeatherMap/OpenWeatherMapProvider";
 import { TopAppBar } from "@/components/TopAppBar";
 import { PageHeader } from "@/components/PageHeader";
-import { CurrentWeatherCard } from "@/components/CurrentWeatherCard";
+import { CurrentWeatherCard } from "@/components/featureOpenWeatherMap/CurrentWeatherCard";
 import { Map } from "@/components/featureMapbox/Map";
+import { HourlyWeatherTabs } from "./components/featureHourlyTab/HourlyWeatherTabs";
 
 export const App = () => {
   return (
@@ -23,8 +24,15 @@ export const App = () => {
                 <CurrentWeatherCard />
                 <Map />
               </div>
+              {/* Hourly Weather Tabs */}
+              <HourlyWeatherTabs />
             </div>
           </main>
+          <footer className="pb-5">
+            <p className="text-center text-muted-foreground">
+              &copy; {new Date().getFullYear()} Dethveiler. All rights reserved.
+            </p>
+          </footer>
         </OpenWeatherMapProvider>
       </ThemeProvider>
     </div>

@@ -39,6 +39,8 @@
 
 #### 7. [MapCard - 地圖卡片功能](./MapCard.md)
 
+#### 8. [MapMarker - 地圖圖標功能](./Marker.md)
+
 ---
 
 ## <img src="./docIconImg/book-open-duotone.svg" width="20" height="20" align="center" /> Structure Guide 文檔結構說明
