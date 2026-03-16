@@ -1,49 +1,9 @@
+// --- Imports ---
 import mapboxgl from "mapbox-gl";
-
-/**
- * 初始化 Mapbox GL 地圖
- * @param container - 地圖容器 HTMLElement
- * @param center - [經度, 緯度]
- * @param theme - "light" | "dark"
- * @param zoom - 縮放等級（預設 MAPBOX.DEFAULTS.ZOOM）
- * @returns Mapbox GL Map 實例
- */
-export function createMap(
-  container: HTMLElement,
-  center: [number, number],
-  theme: string,
-  zoom: number = MAPBOX.DEFAULTS.ZOOM,
-): mapboxgl.Map {
-  mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_API_KEY;
-  return new mapboxgl.Map({
-    container,
-    center,
-    zoom,
-    style:
-      theme === "light"
-        ? "mapbox://styles/mapbox/streets-v11"
-        : "mapbox://styles/mapbox/dark-v11",
-  });
-}
-/**
- * Mapbox API 服務層
- *
- * 本檔案專門負責與 Mapbox API 進行通訊，包含：
- * - 取得靜態地圖圖片
- * - 取得地理編碼（正向/反向）
- * - 取得路徑規劃（Directions）
- *
- * @see https://docs.mapbox.com/api/ - Mapbox API 官方文件
- * @see /docs/API.md - 詳細使用說明文件
- */
-
-// Customer modules
 import { MAPBOX } from "@/config";
-
-// Types
 import type { LngLatLike } from "mapbox-gl";
 
-// Mapbox Geocoding API 回傳型別
+// --- Types ---
 export interface MapboxGeocodeFeature {
   id: string;
   type: string;
@@ -63,8 +23,6 @@ export interface MapboxGeocodeResponse {
   features: MapboxGeocodeFeature[];
   attribution: string;
 }
-
-// Mapbox Directions API 回傳型別
 export interface MapboxDirectionsResponse {
   routes: Array<Record<string, unknown>>;
   waypoints: Array<Record<string, unknown>>;
@@ -72,17 +30,41 @@ export interface MapboxDirectionsResponse {
   uuid?: string;
 }
 
+// --- Constants ---
 const MAPBOX_API_KEY = import.meta.env.VITE_MAPBOX_API_KEY;
 const MAPBOX_BASE_URL = "https://api.mapbox.com";
 
+// --- Main Feature: 地圖初始化 ---
+/**
+ * 初始化 Mapbox GL 地圖
+ * @param container - 地圖容器 HTMLElement
+ * @param center - [經度, 緯度]
+ * @param theme - "light" | "dark"
+ * @param zoom - 縮放等級（預設 MAPBOX.DEFAULTS.ZOOM）
+ * @returns Mapbox GL Map 實例
+ */
+export function createMap(
+  container: HTMLElement,
+  center: [number, number],
+  theme: string,
+  zoom: number = MAPBOX.DEFAULTS.ZOOM,
+): mapboxgl.Map {
+  mapboxgl.accessToken = MAPBOX_API_KEY;
+  return new mapboxgl.Map({
+    container,
+    center,
+    zoom,
+    style:
+      theme === "light"
+        ? "mapbox://styles/mapbox/streets-v11"
+        : "mapbox://styles/mapbox/dark-v11",
+  });
+}
+
+// --- API 服務 ---
+
 /**
  * 取得靜態地圖圖片 URL
- * @param center - 地圖中心點 [經度, 緯度]
- * @param zoom - 縮放等級
- * @param width - 圖片寬度（像素）
- * @param height - 圖片高度（像素）
- * @param options - 額外參數（如標記、樣式等）
- * @returns 靜態地圖圖片 URL
  */
 export function getStaticMapUrl(
   center: LngLatLike,
@@ -90,8 +72,8 @@ export function getStaticMapUrl(
   width: number = 600,
   height: number = 400,
   options?: {
-    marker?: string; // 標記樣式
-    styleId?: string; // 地圖樣式 ID
+    marker?: string;
+    styleId?: string;
     bearing?: number;
     pitch?: number;
   },
@@ -119,10 +101,6 @@ export function getStaticMapUrl(
 
 /**
  * Mapbox Geocoding API - 正向地理編碼
- * @param query - 關鍵字（地名、地址等）
- * @param limit - 回傳數量上限（預設 5）
- * @param language - 語言（預設 zh-TW）
- * @returns Promise<any> - 地理位置結果
  */
 export async function geocode(
   query: string,
@@ -139,11 +117,6 @@ export async function geocode(
 
 /**
  * Mapbox Geocoding API - 反向地理編碼
- * @param lng - 經度
- * @param lat - 緯度
- * @param limit - 回傳數量上限（預設 1）
- * @param language - 語言（預設 zh-TW）
- * @returns Promise<any> - 地理位置結果
  */
 export async function reverseGeocode(
   lng: number,
@@ -159,10 +132,6 @@ export async function reverseGeocode(
 
 /**
  * Mapbox Directions API - 路徑規劃
- * @param waypoints - 路徑點陣列 [[lng, lat], ...]
- * @param profile - 路徑模式（driving, walking, cycling）
- * @param overview - 路徑回傳型態（full, simplified, false）
- * @returns Promise<any> - 路徑結果
  */
 export async function getDirections(
   waypoints: [number, number][],
