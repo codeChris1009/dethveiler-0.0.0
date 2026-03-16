@@ -39,7 +39,6 @@ export const Marker = ({ map, coordinates }: Props) => {
   // 2. 生命週期管理：建立與清理
   useEffect(() => {
     if (!map) return;
-    console.log("Marker: 正在建立並加入地圖", coordinates); // 加入這行除錯
 
     // 初始化 Marker
     const marker = new mapboxgl.Marker({
@@ -52,10 +51,11 @@ export const Marker = ({ map, coordinates }: Props) => {
 
     // Clean up: 組件卸載時移除 Marker，防止閃退與記憶體洩漏
     return () => {
-      console.log("Marker: 正在從地圖移除"); // 觀察是否有不正常的移除
       marker.remove();
       markerRef.current = null;
     };
+    // 注意：這裡不應該依賴 coordinates，否則會導致 Marker 重複建立與閃爍
+    // bug: 加入 coordinates 後，會導致 ERROR
   }, [map, markerElement]);
 
   // 3. 座標更新邏輯：單獨處理座標，不要重新建立 Marker

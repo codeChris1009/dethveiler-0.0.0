@@ -3,8 +3,9 @@ import { ThemeProvider } from "@/components/themeFunc/ThemeProvider";
 import { OpenWeatherMapProvider } from "@/components/featureOpenWeatherMap/OpenWeatherMapProvider";
 import { TopAppBar } from "@/components/TopAppBar";
 import { PageHeader } from "@/components/PageHeader";
-import { CurrentWeatherCard } from "@/components/CurrentWeatherCard";
+import { CurrentWeatherCard } from "@/components/featureOpenWeatherMap/CurrentWeatherCard";
 import { Map } from "@/components/featureMapbox/Map";
+import { HourlyWeatherTabs } from "./components/featureHourlyTab/HourlyWeatherTabs";
 
 export const App = () => {
   return (
@@ -23,6 +24,8 @@ export const App = () => {
                 <CurrentWeatherCard />
                 <Map />
               </div>
+              {/* Hourly Weather Tabs */}
+              <HourlyWeatherTabs />
             </div>
           </main>
         </OpenWeatherMapProvider>

@@ -53,3 +53,6 @@ export {
   convertUnit,
   convertAndFormat,
 } from "@/config/Unit";
+
+export { TABS_LIST } from "@/config/HourlyWeatherTabs";
+export type { Tab } from "@/config/HourlyWeatherTabs";

@@ -43,7 +43,7 @@ export const Map = () => {
     );
     setMap(mapInstance);
     return () => mapInstance.remove();
-  }, [theme, center]);
+  }, [theme, center, weather]);
 
   // early return 僅在所有 Hook 之後，且只保留一次
   if (!weather || !weather.location) {
