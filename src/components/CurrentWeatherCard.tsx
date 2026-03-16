@@ -1,5 +1,5 @@
 // Customer modules
-import { APP, UNITS, OPENWEATHERMAP_API } from "@/config/index";
+import { APP, getUnit, OPENWEATHERMAP_API } from "@/config/index";
 
 // Hooks
 import { useWeather } from "@/hooks/useWeather";
@@ -65,7 +65,7 @@ export const CurrentWeatherCard = () => {
         <p className="text-5xl font-medium flex item-start sm:text-7xl">
           {currentWeather.temp}
           <span className="text-3xl">
-            {UNITS.TEMPERATURE[localStorageUnit]}
+            {getUnit("TEMPERATURE", localStorageUnit)}
           </span>
         </p>
         <div>
@@ -77,7 +77,7 @@ export const CurrentWeatherCard = () => {
             <span className="text-muted-foreground">Feels like</span>
             <span>
               {currentWeather.feelsLike}
-              {UNITS.DEGREE}
+              {getUnit("TEMPERATURE", localStorageUnit)}
             </span>
           </div>
         </div>
@@ -86,7 +86,7 @@ export const CurrentWeatherCard = () => {
         <div>
           <p className="text-sm text-muted-foreground uppercase">Wind</p>
           <div className="flex items-center gap-1">
-            {currentWeather.windSpeed} {UNITS.WIND_SPEED[localStorageUnit]}
+            {currentWeather.windSpeed} {getUnit("WIND_SPEED", localStorageUnit)}
             <WindIcon
               size={14}
               fill="currentColor"
@@ -99,7 +99,7 @@ export const CurrentWeatherCard = () => {
           <div className="flex items-center gap-1">
             <p>
               {currentWeather.humidity}
-              {UNITS.PERCENTAGE[localStorageUnit]}
+              {getUnit("PERCENTAGE", localStorageUnit)}
             </p>
           </div>
         </div>
@@ -108,7 +108,7 @@ export const CurrentWeatherCard = () => {
           <div className="flex items-center gap-1">
             <p>
               {currentWeather.visibility}
-              {UNITS.VISIBILITY[localStorageUnit]}
+              {getUnit("VISIBILITY", localStorageUnit)}
             </p>
           </div>
         </div>
@@ -117,7 +117,7 @@ export const CurrentWeatherCard = () => {
           <div className="flex items-center gap-1">
             <p>
               {currentWeather.pressure}
-              {UNITS.PRESSURE[localStorageUnit]}
+              {getUnit("PRESSURE", localStorageUnit)}
             </p>
           </div>
         </div>

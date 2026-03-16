@@ -144,7 +144,7 @@ export const SearchDialog = () => {
 
             <div
               className="
-              flex justify-between w-[250px]
+              flex justify-between w-62.5
               max-lg:hidden uppercase
               text-muted-foreground dark:text-muted-foreground/70 placeholder:opacity-100"
             >

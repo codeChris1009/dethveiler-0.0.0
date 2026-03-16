@@ -1,32 +1,19 @@
 // Node modules and libraries
-import { createContext } from "react";
+import { themeProviderContext, THEME_ENUM } from "./ThemeContext";
+import type { Theme } from "./ThemeContext";
 
 // Hooks
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
-// Types
-type Theme = "dark" | "light" | "system";
 type ThemeProviderProps = {
   children: React.ReactNode;
   defaultTheme?: Theme;
   storageKey?: string;
 };
 
-type ThemeProviderState = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-};
-
-const initialState: ThemeProviderState = {
-  theme: "system",
-  setTheme: () => {},
-};
-
-const themeProviderContext = createContext<ThemeProviderState>(initialState);
-
 export const ThemeProvider = ({
   children,
-  defaultTheme = "system",
+  defaultTheme = THEME_ENUM.SYSTEM,
   storageKey = "vite-ui-theme",
   ...props
 }: ThemeProviderProps) => {
@@ -37,14 +24,13 @@ export const ThemeProvider = ({
   useEffect(() => {
     localStorage.setItem(storageKey, theme);
     const root = document.documentElement;
-    root.classList.remove("light", "dark");
-    if (theme === "system") {
+    root.classList.remove(THEME_ENUM.LIGHT, THEME_ENUM.DARK);
+    if (theme === THEME_ENUM.SYSTEM) {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
-        ? "dark"
-        : "light";
+        ? THEME_ENUM.DARK
+        : THEME_ENUM.LIGHT;
       root.classList.add(systemTheme);
-
       return;
     }
     root.classList.add(theme);
@@ -63,12 +49,4 @@ export const ThemeProvider = ({
       {children}
     </themeProviderContext.Provider>
   );
-};
-
-export const useTheme = () => {
-  const context = useContext(themeProviderContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
 };

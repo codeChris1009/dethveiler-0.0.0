@@ -1,5 +1,6 @@
 // Hooks
-import { useTheme } from "@/components/themeFunc/ThemeProvider";
+import { useTheme } from "@/hooks/useTheme";
+import { THEME_ENUM } from "@/components/themeFunc/ThemeContext";
 
 // UI Components
 import { Button } from "@/components/ui/button";
@@ -38,17 +39,17 @@ export const ThemeDropdown = () => {
         }
       ></DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          <SunIcon className="me-2 uppercase" />
+        <DropdownMenuItem onClick={() => setTheme(THEME_ENUM.LIGHT)}>
+          <SunIcon className="me-2" />
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          <MoonIcon className="me-2 uppercase" />
+        <DropdownMenuItem onClick={() => setTheme(THEME_ENUM.DARK)}>
+          <MoonIcon className="me-2" />
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          <LaptopIcon className="me-2 uppercase" />
-          system
+        <DropdownMenuItem onClick={() => setTheme(THEME_ENUM.SYSTEM)}>
+          <LaptopIcon className="me-2" />
+          System
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

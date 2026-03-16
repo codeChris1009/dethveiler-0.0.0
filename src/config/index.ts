@@ -43,8 +43,13 @@ export const APP = {
 } as const;
 
 // 重新匯出 UNITS 和相關類型供其他模組使用
-export { UNITS } from "@/config/Unit";
 export type { UnitSystem, UnitConfig } from "@/config/Unit";
 
 // 從 Unit.ts 匯出所有格式化工具函數
-export * from "@/config/Unit";
+export {
+  UNIT_SYSTEM,
+  getUnit,
+  formatWithUnit,
+  convertUnit,
+  convertAndFormat,
+} from "@/config/Unit";

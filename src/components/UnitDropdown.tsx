@@ -1,5 +1,5 @@
 // Customer modules
-import { APP, OPENWEATHERMAP_API, UNITS, UNIT_SYSTEM, getUnit } from "@/config";
+import { APP, OPENWEATHERMAP_API, UNIT_SYSTEM, getUnit } from "@/config";
 import type { UnitSystem } from "@/config";
 
 // Hooks
@@ -56,13 +56,13 @@ export const UnitDropdown = () => {
               className="uppercase"
               value={UNIT_SYSTEM.METRIC}
             >
-              {`${UNIT_SYSTEM.METRIC} (${UNITS.TEMPERATURE.metric})`}
+              {`${UNIT_SYSTEM.METRIC} (${getUnit("TEMPERATURE", UNIT_SYSTEM.METRIC)})`}
             </DropdownMenuRadioItem>
             <DropdownMenuRadioItem
               className="uppercase"
               value={UNIT_SYSTEM.IMPERIAL}
             >
-              {`${UNIT_SYSTEM.IMPERIAL} (${UNITS.TEMPERATURE.imperial})`}
+              {`${UNIT_SYSTEM.IMPERIAL} (${getUnit("TEMPERATURE", UNIT_SYSTEM.IMPERIAL)})`}
             </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuGroup>

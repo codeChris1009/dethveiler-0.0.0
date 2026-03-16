@@ -26,9 +26,9 @@ export type UnitConfig = {
  * 完整的單位配置
  * 使用 as const 確保所有單位字串為唯讀常數
  */
-export const UNITS = {
+const UNITS = {
   // Degree symbol for temperature
-  DEGREE: "°",
+  DEGREE: "°" as const,
 
   /**
    * 溫度單位
@@ -38,7 +38,7 @@ export const UNITS = {
   TEMPERATURE: {
     metric: "°C",
     imperial: "°F",
-  },
+  } as const,
 
   /**
    * 風速單位
@@ -48,7 +48,7 @@ export const UNITS = {
   WIND_SPEED: {
     metric: "m/s",
     imperial: "mph",
-  },
+  } as const,
 
   /**
    * 氣壓單位
@@ -58,7 +58,7 @@ export const UNITS = {
   PRESSURE: {
     metric: "hPa",
     imperial: "inHg",
-  },
+  } as const,
 
   /**
    * 降雨量/降雪量單位
@@ -68,7 +68,7 @@ export const UNITS = {
   PRECIPITATION: {
     metric: "mm",
     imperial: "in",
-  },
+  } as const,
 
   /**
    * 能見度單位
@@ -78,7 +78,7 @@ export const UNITS = {
   VISIBILITY: {
     metric: "km",
     imperial: "mi",
-  },
+  } as const,
 
   /**
    * 距離單位（短距離）
@@ -88,7 +88,7 @@ export const UNITS = {
   DISTANCE_SHORT: {
     metric: "m",
     imperial: "ft",
-  },
+  } as const,
 
   /**
    * 距離單位（長距離）
@@ -98,7 +98,7 @@ export const UNITS = {
   DISTANCE_LONG: {
     metric: "km",
     imperial: "mi",
-  },
+  } as const,
 
   /**
    * 百分比單位
@@ -108,7 +108,7 @@ export const UNITS = {
   PERCENTAGE: {
     metric: "%",
     imperial: "%",
-  },
+  } as const,
 
   /**
    * 紫外線指數
@@ -118,7 +118,7 @@ export const UNITS = {
   UV_INDEX: {
     metric: "",
     imperial: "",
-  },
+  } as const,
 
   /**
    * 空氣品質指數 (AQI)
@@ -128,7 +128,7 @@ export const UNITS = {
   AQI: {
     metric: "",
     imperial: "",
-  },
+  } as const,
 
   /**
    * 日照量/太陽輻射量單位
@@ -253,7 +253,12 @@ export function getUnit(
   unitType: keyof typeof UNITS,
   system: UnitSystem,
 ): string {
-  return UNITS[unitType][system];
+  const unit = UNITS[unitType];
+  if (typeof unit === "object" && unit !== null && "metric" in unit && "imperial" in unit) {
+    return unit[system];
+  }
+  // 若該單位型態不是物件（如 DEGREE），直接回傳
+  return unit as string;
 }
 
 /**
@@ -275,7 +280,7 @@ export function formatWithUnit(
   system: UnitSystem,
   decimals: number = 1,
 ): string {
-  const unit = UNITS[unitType][system];
+  const unit = getUnit(unitType, system);
   const roundedValue = value.toFixed(decimals);
 
   // 如果單位是空字串（如 UV_INDEX），只返回數值
