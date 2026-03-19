@@ -1,9 +1,13 @@
+# filepath: /Users/susx/theReactPrjs/dethveiler-0.0.0/.github/workflows/deploy.yaml
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
