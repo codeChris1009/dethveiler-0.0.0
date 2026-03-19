@@ -4,6 +4,7 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/dethveiler-0.0.0/",
   plugins: [react()],
   resolve: {
     alias: {

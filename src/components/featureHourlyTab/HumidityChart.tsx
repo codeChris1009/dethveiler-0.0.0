@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Config
-import { getUnit } from "@/config/index";
+// // Config
+// import { getUnit } from "@/config/index";
 
 // Types
 import type { ChartConfig } from "@/components/ui/chart";
